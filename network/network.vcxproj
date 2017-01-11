@@ -265,8 +265,10 @@
   <ItemGroup>
     <ClInclude Include="socket\sockdefs.h" />
     <ClInclude Include="socket\SocketAddressIPv4.h" />
+    <ClInclude Include="socket\SocketAddressIPv6.h" />
     <ClInclude Include="socket\SocketException.h" />
     <ClInclude Include="socket\SocketIPv4.h" />
+    <ClInclude Include="socket\SocketIPv6.h" />
     <ClInclude Include="socket\SocketStream.h" />
     <ClInclude Include="socket\WindowsSocket.h" />
     <ClInclude Include="RfbInputGate.h" />
@@ -275,9 +277,13 @@
     <ClInclude Include="TcpServer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="socket\inet_ntop.cpp" />
+    <ClCompile Include="socket\inet_pton.cpp" />
     <ClCompile Include="socket\SocketAddressIPv4.cpp" />
+    <ClCompile Include="socket\SocketAddressIPv6.cpp" />
     <ClCompile Include="socket\SocketException.cpp" />
     <ClCompile Include="socket\SocketIPv4.cpp" />
+    <ClCompile Include="socket\SocketIPv6.cpp" />
     <ClCompile Include="socket\SocketStream.cpp" />
     <ClCompile Include="socket\WindowsSocket.cpp" />
     <ClCompile Include="RfbInputGate.cpp" />

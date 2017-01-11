@@ -22,38 +22,45 @@
 //-------------------------------------------------------------------------
 //
 
-#ifndef SOCKET_STREAM_H
-#define SOCKET_STREAM_H
+#ifndef SOCKET_ADDRESS_IPV6_H
+#define SOCKET_ADDRESS_IPV6_H
 
-#include "io-lib/Channel.h"
+#include "util/CommonHeader.h"
+#include "thread/LocalMutex.h"
+#include "SocketException.h"
+#include "sockdefs.h"
+#include "win-system/WsaStartup.h"
 
-#include "../socket/SocketIPv6.h"
-#include "../socket/SocketAddressIPv6.h"
+// FIXME: Deprecated method, only for testing of old code.
+void getLocalIPAddrString(char *buffer, int buflen);
 
-#include "io-lib/IOException.h"
-
-class SocketStream : public Channel
+class SocketAddressIPv6
 {
 public:
-  SocketStream(SocketIPv6 *);
-  virtual ~SocketStream();
+  SocketAddressIPv6();
+  SocketAddressIPv6(struct sockaddr_in6);
+  SocketAddressIPv6(const TCHAR *host, unsigned short port);
 
-  //
-  // Inherited from Channel.
-  //
+  SocketAddressIPv6(const SocketAddressIPv6 &socketAddressIPv6);
+  SocketAddressIPv6 &operator=(const SocketAddressIPv6 &socketAddressIPv6);
 
-  virtual size_t read(void *, size_t) throw(IOException);
+  socklen_t getAddrLen() const;
+  struct sockaddr_in6 getSockAddr() const;
 
-  virtual size_t write(const void *, size_t) throw(IOException);
+  // Converts socket address to it's string value (ip address as string).
+  void toString(StringStorage *address) const;
 
-  // Closes connection and break all blocked operation.
-  // @throw Exception on error.
-  virtual void close();
+  static SocketAddressIPv6 resolve(const TCHAR *host, unsigned short port) throw(SocketException);
+  static addrinfo get_hints();
 
 protected:
-  SocketIPv6 *m_socket;
+  WsaStartup m_wsaStartup;
+  unsigned short m_port;
+  struct in_addr6 m_addr;
 
-  friend class SocketIPv6;
+
+  static LocalMutex s_resolveMutex;
+ 
 };
 
 #endif

@@ -57,7 +57,7 @@ protected:
    * Inherited from superclass.
    * Give management over incoming connection to new HttpClientThread instance.
    */
-  virtual void onAcceptConnection(SocketIPv4 *socket);
+  virtual void onAcceptConnection(SocketIPv6 *socket);
 
 private:
   LogWriter *m_log;

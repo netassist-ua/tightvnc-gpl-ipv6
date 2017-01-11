@@ -111,11 +111,17 @@ void RfbInitializer::initVersion()
 
 void RfbInitializer::checkForLoopback()
 {
-  SocketAddressIPv4 sockAddr;
+  SocketAddressIPv6 sockAddr;
   m_client->getSocketAddr(&sockAddr);
-  struct sockaddr_in addrIn = sockAddr.getSockAddr();
+  struct sockaddr_in6 addrIn = sockAddr.getSockAddr();
 
-  bool isLoopback = (unsigned long)addrIn.sin_addr.S_un.S_addr == 16777343;
+  static const unsigned char localhost_bytes[] =
+        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+  static const unsigned char mapped_ipv4_localhost[] =
+        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0xff, 0x7f, 0, 0, 1 };
+
+  bool isLoopback = memcmp(&localhost_bytes, &addrIn.sin6_addr.u.Byte, 16) == 0
+					|| memcmp(&mapped_ipv4_localhost, &addrIn.sin6_addr.u.Byte, 16) == 0;
 
   ServerConfig *srvConf = Configurator::getInstance()->getServerConfig();
   if (isLoopback && !srvConf->isLoopbackConnectionsAllowed()) {

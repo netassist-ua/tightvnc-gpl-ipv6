@@ -29,7 +29,7 @@
 #include "network/RfbInputGate.h"
 #include "network/RfbOutputGate.h"
 #include "network/socket/SocketStream.h"
-#include "network/socket/SocketIPv4.h"
+#include "network/socket/SocketIPv6.h"
 #include "rfb/FrameBuffer.h"
 #include "region/Dimension.h"
 #include "region/Point.h"
@@ -130,7 +130,7 @@ public:
   // This constructor expects a connected TCP socket. For example, it can be
   // used for reverse connections (when servers connect to viewers).
   //
-  RemoteViewerCore(SocketIPv4 *socket,
+  RemoteViewerCore(SocketIPv6 *socket,
                    CoreEventsAdapter *adapter,
                    Logger *logger = 0,
                    bool sharedFlag = true);
@@ -225,7 +225,7 @@ public:
   // This version expects a connected TCP socket. For example, it can be used
   // for reverse connections (when servers connect to viewers).
   //
-  void start(SocketIPv4 *socket,
+  void start(SocketIPv6 *socket,
              CoreEventsAdapter *adapter,
              bool sharedFlag = true);
 

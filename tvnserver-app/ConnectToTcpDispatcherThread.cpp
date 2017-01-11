@@ -43,7 +43,7 @@ ConnectToTcpDispatcherThread::ConnectToTcpDispatcherThread(
   m_connectionId(connectionId),
   m_keyword(*keyword),
   m_clientManager(clientManager),
-  m_socket(new SocketIPv4()),
+  m_socket(new SocketIPv6()),
   m_pendingToRemove(false),
   m_log(log)
 {

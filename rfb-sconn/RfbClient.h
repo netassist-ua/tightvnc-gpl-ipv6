@@ -26,7 +26,7 @@
 #define __RFBCLIENT_H__
 
 #include <list>
-#include "network/socket/SocketIPv4.h"
+#include "network/socket/SocketIPv6.h"
 #include "win-system/WindowsEvent.h"
 #include "thread/Thread.h"
 #include "network/RfbOutputGate.h"
@@ -58,7 +58,7 @@ enum ClientState
 class RfbClient: public Thread, ClientInputEventListener, private SenderControlInformationInterface
 {
 public:
-  RfbClient(NewConnectionEvents *newConnectionEvents, SocketIPv4 *socket,
+  RfbClient(NewConnectionEvents *newConnectionEvents, SocketIPv6 *socket,
             ClientTerminationListener *extTermListener,
             ClientAuthListener *extAuthListener, bool viewOnly,
             bool isOutgoing, unsigned int id,
@@ -75,7 +75,7 @@ public:
   unsigned int getId() const;
   void getPeerHost(StringStorage *address);
   void getLocalIpAddress(StringStorage *address);
-  void getSocketAddr(SocketAddressIPv4 *addr) const;
+  void getSocketAddr(SocketAddressIPv6 *addr) const;
 
   // Return true if connection has been initialised from the server to a client
   // else return false.
@@ -124,7 +124,7 @@ private:
   LocalMutex m_clientStateMut;
   ClientTerminationListener *m_extTermListener;
 
-  SocketIPv4 *m_socket;
+  SocketIPv6 *m_socket;
 
   ClientAuthListener *m_extAuthListener;
 

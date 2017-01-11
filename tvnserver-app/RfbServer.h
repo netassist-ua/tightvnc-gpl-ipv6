@@ -65,7 +65,7 @@ protected:
    * Checks firewall rules (@see ServerConfig class) for incoming connection
    * and, if it firewall passes connection, when pass it for owning to rfb client manager.
    */
-  virtual void onAcceptConnection(SocketIPv4 *socket);
+  virtual void onAcceptConnection(SocketIPv6 *socket);
 
 protected:
   /**

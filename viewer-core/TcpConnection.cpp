@@ -55,7 +55,7 @@ void TcpConnection::bind(const TCHAR *host, UINT16 port)
   m_wasBound = true;
 }
 
-void TcpConnection::bind(SocketIPv4 *socket)
+void TcpConnection::bind(SocketIPv6 *socket)
 {
   AutoLock al(&m_connectLock);
   if (m_wasBound) {
@@ -95,7 +95,7 @@ void TcpConnection::connect()
     // need create to socket
     if (m_socket == 0) {
       if (!m_host.isEmpty() && m_port != 0) {
-        SocketAddressIPv4 ipAddress(m_host.getString(), m_port);
+        SocketAddressIPv6 ipAddress(m_host.getString(), m_port);
 
         StringStorage ipAddressString;
         ipAddress.toString(&ipAddressString);
@@ -103,7 +103,7 @@ void TcpConnection::connect()
                             m_host.getString(), m_port,
                             ipAddressString.getString(), m_port);
 
-        m_socket = new SocketIPv4;
+        m_socket = new SocketIPv6;
         m_socketOwner = true;
         m_socket->connect(ipAddress);
         m_socket->enableNaggleAlgorithm(false);

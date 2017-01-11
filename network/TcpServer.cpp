@@ -25,13 +25,14 @@
 #include "TcpServer.h"
 
 #include "network/socket/SocketAddressIPv4.h"
+#include "network/socket/SocketAddressIPv6.h"
 
 TcpServer::TcpServer(const TCHAR *bindHost, unsigned short bindPort,
                      bool autoStart,
                      bool lockAddr)
 : m_bindHost(bindHost), m_bindPort(bindPort)
 {
-  SocketAddressIPv4 bindAddr = SocketAddressIPv4::resolve(bindHost, bindPort);
+  SocketAddressIPv6 bindAddr = SocketAddressIPv6::resolve(bindHost, bindPort);
 
   if (lockAddr) {
     m_listenSocket.setExclusiveAddrUse();
@@ -74,7 +75,7 @@ void TcpServer::start()
 void TcpServer::execute()
 {
   while (!isTerminating()) {
-    SocketIPv4 *clientSocket = NULL;
+    SocketIPv6 *clientSocket = NULL;
 
     try {
       clientSocket = m_listenSocket.accept();

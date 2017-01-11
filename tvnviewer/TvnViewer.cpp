@@ -291,7 +291,7 @@ void TvnViewer::newListeningConnection()
   connectionConfig.loadFromStorage(&ccsm);
 
   if (m_conListener != 0) {
-    SocketIPv4 *socket = m_conListener->getNewConnection();
+    SocketIPv6 *socket = m_conListener->getNewConnection();
     while (socket != 0) {
       ViewerInstance *viewerInst = new ViewerInstance(this,
                                                       &connectionData,

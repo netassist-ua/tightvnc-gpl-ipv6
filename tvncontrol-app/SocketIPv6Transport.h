@@ -1,4 +1,4 @@
-// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// Copyright (C) 2010,2011,2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -22,28 +22,54 @@
 //-------------------------------------------------------------------------
 //
 
-#include "HttpServer.h"
-#include "HttpClient.h"
+#ifndef _SOCKET_IPV6_TRANSPORT_H_
+#define _SOCKET_IPV6_TRANSPORT_H_
 
-#include "thread/ZombieKiller.h"
+#include "Transport.h"
 
-HttpServer::HttpServer(const TCHAR *bindHost, unsigned short bindPort, bool lockAddr, LogWriter *log)
-: TcpServer(bindHost, bindPort, true, lockAddr),
-  m_log(log)
+#include "network/socket/SocketIPv6.h"
+
+/**
+ * Transport that uses IPv6 socket.
+ */
+class SocketIPv6Transport : public Transport
 {
-  m_log->message(_T("Http server started"));
-}
+public:
+  /**
+   * Creates transport and takes ownership over existing socket.
+   */
+  SocketIPv6Transport(SocketIPv6 *socket);
+  /**
+   * Deletes transport and frees resources.
+   */
+  virtual ~SocketIPv6Transport();
 
-HttpServer::~HttpServer()
-{
-  m_log->message(_T("Http server stopped"));
-}
+  /**
+   * Returns transport's IO Stream.
+   */
+  virtual Channel *getIOStream();
 
-void HttpServer::onAcceptConnection(SocketIPv6 *socket)
-{
-  TcpClientThread *clientThread = new HttpClient(socket, m_log);
+  /**
+   * Accepts new connection.
+   * @return transport for accepted connection.
+   * @throws SocketException on fail.
+   */
+  virtual Transport *accept() throw(SocketException);
 
-  clientThread->resume();
+  /**
+   * Destroys transport(closes socket).
+   */
+  virtual void close() throw(SocketException);
 
-  ZombieKiller::getInstance()->addZombie(clientThread);
-}
+private:
+  /**
+   * Real transport.
+   */
+  SocketIPv6 *m_socket;
+  /**
+   * Stream.
+   */
+  Channel *m_stream;
+};
+
+#endif

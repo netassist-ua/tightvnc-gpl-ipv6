@@ -295,3 +295,24 @@ paket-files/
 *.exe
 *.out
 *.app
+
+#VIM
+#
+# swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+
+#Windows event log
+#
+win-event-log/MessageProvider.h
+win-event-log/MessageProvider.rc
+win-event-log/MSG*.bin

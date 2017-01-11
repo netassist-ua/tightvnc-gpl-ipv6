@@ -29,7 +29,7 @@
 
 #include <crtdbg.h>
 
-SocketStream::SocketStream(SocketIPv4 *sock)
+SocketStream::SocketStream(SocketIPv6 *sock)
 : m_socket(sock)
 {
   _ASSERT(m_socket != NULL);

@@ -23,7 +23,7 @@
 //
 
 #include "TransportFactory.h"
-#include "SocketIPv4Transport.h"
+#include "SocketIPv6Transport.h"
 #include "NamedPipeTransport.h"
 
 #include "win-system/SecurityAttributes.h"
@@ -31,7 +31,7 @@
 Transport *TransportFactory::createSocketClientTransport(const TCHAR *connectHost,
                                                          unsigned int connectPort)
 {
-  SocketIPv4 *socket = new SocketIPv4();
+  SocketIPv6 *socket = new SocketIPv6();
 
   try {
     socket->connect(connectHost, connectPort);
@@ -40,13 +40,13 @@ Transport *TransportFactory::createSocketClientTransport(const TCHAR *connectHos
     throw;
   }
 
-  return new SocketIPv4Transport(socket);
+  return new SocketIPv6Transport(socket);
 }
 
 Transport *TransportFactory::createSocketServerTransport(const TCHAR *bindHost,
                                                          unsigned int bindPort)
 {
-  SocketIPv4 *socket = new SocketIPv4();
+  SocketIPv6 *socket = new SocketIPv6();
 
   try {
     socket->bind(bindHost, bindPort);
@@ -56,7 +56,7 @@ Transport *TransportFactory::createSocketServerTransport(const TCHAR *bindHost,
     throw;
   }
 
-  return new SocketIPv4Transport(socket);
+  return new SocketIPv6Transport(socket);
 }
 
 Transport *TransportFactory::createPipeClientTransport(const TCHAR *name)

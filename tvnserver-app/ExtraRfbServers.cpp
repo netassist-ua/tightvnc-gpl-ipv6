@@ -121,7 +121,7 @@ bool ExtraRfbServers::startUp(bool asService, RfbClientManager *mgr)
 
   if (newConf.acceptConnections) {
     const TCHAR *bindHost =
-      newConf.loopbackOnly ? _T("localhost") : _T("0.0.0.0");
+      newConf.loopbackOnly ? _T("localhost") : _T("::");
 
     for (size_t i = 0; i < newConf.extraPorts.count(); i++) {
       PortMapping pm = *newConf.extraPorts.at(i);

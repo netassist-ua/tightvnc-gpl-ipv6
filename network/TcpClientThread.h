@@ -27,7 +27,7 @@
 
 #include "thread/Thread.h"
 
-#include "socket/SocketIPv4.h"
+#include "socket/SocketIPv6.h"
 
 /**
  * Thread owning incoming tcp connection.
@@ -45,7 +45,7 @@ public:
    * Creates new tcp client thread.
    * @param socket incoming connection socket.
    */
-  TcpClientThread(SocketIPv4 *socket);
+  TcpClientThread(SocketIPv6 *socket);
   /**
    * Deletes socket that was passed to constructor (see above).
    */
@@ -62,7 +62,7 @@ protected:
   /**
    * Socket for owning.
    */
-  SocketIPv4 *m_socket;
+  SocketIPv6 *m_socket;
 };
 
 #endif

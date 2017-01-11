@@ -73,7 +73,7 @@ private:
   // This class owns the socket until the socket will be passed to another
   // object. Socket delegation must be protected by a mutex to make sure we
   // know who is the owner at the moment of closing the socket.
-  SocketIPv4 *m_socket;
+  SocketIPv6 *m_socket;
   bool m_pendingToRemove;
   LocalMutex m_socketDelegationMutex;
 

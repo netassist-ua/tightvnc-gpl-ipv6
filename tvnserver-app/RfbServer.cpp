@@ -54,29 +54,30 @@ RfbServer::~RfbServer()
   m_log->message(_T("Rfb server at %s:%d stopped"), getBindHost(), (int)getBindPort());
 }
 
-void RfbServer::onAcceptConnection(SocketIPv4 *socket)
+void RfbServer::onAcceptConnection(SocketIPv6 *socket)
 {
   try {
     // Get incoming connection address and convert it to string.
-    SocketAddressIPv4 peerAddr;
+    SocketAddressIPv6 peerAddr;
     socket->getPeerAddr(&peerAddr);
     StringStorage peerIpString;
     peerAddr.toString(&peerIpString);
 
     m_log->message(_T("Incoming rfb connection from %s"), peerIpString.getString());
 
-    struct sockaddr_in addr_in = peerAddr.getSockAddr();
+    struct sockaddr_in6 addr_in = peerAddr.getSockAddr();
 
     // Check access control rules for the IP address of the peer.
     // FIXME: Check loopback-related rules separately, report differently.
     ServerConfig *config = Configurator::getInstance()->getServerConfig();
-    IpAccessRule::ActionType action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+
+    /*IpAccessRule::ActionType action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
 
     if (action == IpAccessRule::ACTION_TYPE_DENY) {
       m_log->message(_T("Connection rejected due to access control rules"));
       delete socket;
       return;
-    }
+    }*/
 
     // Access granted, add new RFB client. One more check will follow later in
     // RfbClientManager::onCheckAccessControl().

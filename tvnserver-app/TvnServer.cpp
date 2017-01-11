@@ -321,7 +321,7 @@ void TvnServer::restartHttpServer()
     try {
       // FIXME: HTTP server should bind to localhost if only loopback
       //        connections are allowed.
-      m_httpServer = new HttpServer(_T("0.0.0.0"), m_srvConfig->getHttpPort(), m_runAsService, &m_log);
+      m_httpServer = new HttpServer(_T("::"), m_srvConfig->getHttpPort(), m_runAsService, &m_log);
     } catch (Exception &ex) {
       m_log.error(_T("Failed to start HTTP server: \"%s\""), ex.getMessage());
     }
@@ -364,7 +364,7 @@ void TvnServer::restartMainRfbServer()
     return;
   }
 
-  const TCHAR *bindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("0.0.0.0");
+  const TCHAR *bindHost = m_srvConfig->isOnlyLoopbackConnectionsAllowed() ? _T("localhost") : _T("::");
   unsigned short bindPort = m_srvConfig->getRfbPort();
 
   m_log.message(_T("Starting main RFB server"));

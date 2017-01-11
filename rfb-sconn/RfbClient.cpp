@@ -32,7 +32,7 @@
 #include "server-config-lib/Configurator.h"
 
 RfbClient::RfbClient(NewConnectionEvents *newConnectionEvents,
-                     SocketIPv4 *socket,
+                     SocketIPv6 *socket,
                      ClientTerminationListener *extTermListener,
                      ClientAuthListener *extAuthListener, bool viewOnly,
                      bool isOutgoing, unsigned int id,
@@ -90,7 +90,7 @@ bool RfbClient::isOutgoing() const
 
 void RfbClient::getPeerHost(StringStorage *host)
 {
-  SocketAddressIPv4 addr;
+  SocketAddressIPv6 addr;
 
   if (m_socket->getPeerAddr(&addr)) {
     addr.toString(host);
@@ -104,7 +104,7 @@ void RfbClient::getPeerHost(StringStorage *host)
 
 void RfbClient::getLocalIpAddress(StringStorage *address)
 {
-  SocketAddressIPv4 addr;
+  SocketAddressIPv6 addr;
 
   if (m_socket->getLocalAddr(&addr)) {
     addr.toString(address);
@@ -116,7 +116,7 @@ void RfbClient::getLocalIpAddress(StringStorage *address)
   }
 }
 
-void RfbClient::getSocketAddr(SocketAddressIPv4 *addr) const
+void RfbClient::getSocketAddr(SocketAddressIPv6 *addr) const
 {
   m_socket->getPeerAddr(addr);
 }

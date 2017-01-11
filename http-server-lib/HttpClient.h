@@ -37,7 +37,7 @@
 class HttpClient : public TcpClientThread
 {
 public:
-  HttpClient(SocketIPv4 *socket, LogWriter *log);
+  HttpClient(SocketIPv6 *socket, LogWriter *log);
   virtual ~HttpClient();
 
 protected:

@@ -27,7 +27,7 @@
 
 #include "thread/AutoLock.h"
 
-const TCHAR ConnectionListener::DEFAULT_HOST[] = _T("0.0.0.0");
+const TCHAR ConnectionListener::DEFAULT_HOST[] = _T("::");
 
 ConnectionListener::ConnectionListener(WindowsApplication *application,
                                        UINT16 port)
@@ -40,7 +40,7 @@ ConnectionListener::~ConnectionListener()
 {
   AutoLock al(&m_connectionsLock);
   while (!m_connections.empty()) {
-    SocketIPv4 *socket = m_connections.front();
+    SocketIPv6 *socket = m_connections.front();
     delete socket;
     m_connections.pop_front();
   }
@@ -51,17 +51,17 @@ UINT16 ConnectionListener::getBindPort() const
   return TcpServer::getBindPort();
 }
 
-void ConnectionListener::onAcceptConnection(SocketIPv4 *socket)
+void ConnectionListener::onAcceptConnection(SocketIPv6 *socket)
 {
   AutoLock al(&m_connectionsLock);
   m_connections.push_front(socket);
   m_application->postMessage(TvnViewer::WM_USER_NEW_LISTENING);
 }
 
-SocketIPv4 *ConnectionListener::getNewConnection()
+SocketIPv6 *ConnectionListener::getNewConnection()
 {
   AutoLock al(&m_connectionsLock);
-  SocketIPv4 *socket = 0;
+  SocketIPv6 *socket = 0;
   if (!m_connections.empty()) {
     socket = m_connections.front();
     m_connections.pop_front();

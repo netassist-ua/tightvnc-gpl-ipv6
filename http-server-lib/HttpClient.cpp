@@ -28,7 +28,7 @@
 
 #include "network/socket/SocketStream.h"
 
-HttpClient::HttpClient(SocketIPv4 *socket, LogWriter *log)
+HttpClient::HttpClient(SocketIPv6 *socket, LogWriter *log)
 : TcpClientThread(socket),
   m_log(log)
 {
@@ -57,7 +57,7 @@ void HttpClient::execute()
     // Convert peer ip address to string value.
     //
 
-    SocketAddressIPv4 peerAddress;
+    SocketAddressIPv6 peerAddress;
 
     m_socket->getPeerAddr(&peerAddress);
 

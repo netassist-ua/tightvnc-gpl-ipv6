@@ -45,7 +45,7 @@ ViewerInstance::ViewerInstance(WindowsApplication *application,
 ViewerInstance::ViewerInstance(WindowsApplication *application,
                                ConnectionData *condata,
                                const ConnectionConfig *conConf,
-                               SocketIPv4 *socket)
+                               SocketIPv6 *socket)
 : m_conConf(*conConf),
   m_condata(*condata),
   m_socket(socket),

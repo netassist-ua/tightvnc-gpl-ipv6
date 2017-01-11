@@ -27,7 +27,7 @@
 
 #include "thread/Thread.h"
 #include "util/Exception.h"
-#include "network/socket/SocketIPv4.h"
+#include "network/socket/SocketIPv6.h"
 
 /**
  * Abstract multithreaded TCP server class.
@@ -78,7 +78,7 @@ protected:
    * Called from tcp server thread when server accepts connection to process it.
    * @param socket incoming connection socket.
    */
-  virtual void onAcceptConnection(SocketIPv4 *socket) = 0;
+  virtual void onAcceptConnection(SocketIPv6 *socket) = 0;
 
   /**
    * Inherited from Thread class.
@@ -90,7 +90,7 @@ private:
   /**
    * Listening socket.
    */
-  SocketIPv4 m_listenSocket;
+  SocketIPv6 m_listenSocket;
   /**
    * Host to bind.
    */

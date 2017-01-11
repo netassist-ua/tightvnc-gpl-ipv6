@@ -42,14 +42,14 @@ public:
   virtual ~ConnectionListener();
 
   // this method return pointer to new listening connection, if him is exist, and 0 if isn't
-  SocketIPv4 *getNewConnection();
+  SocketIPv6 *getNewConnection();
 
   UINT16 getBindPort() const;
 protected:
-  void onAcceptConnection(SocketIPv4 *socket);
+  void onAcceptConnection(SocketIPv6 *socket);
 
   WindowsApplication *m_application;
-  list<SocketIPv4 *> m_connections;
+  list<SocketIPv6 *> m_connections;
   LocalMutex m_connectionsLock;
 };
 

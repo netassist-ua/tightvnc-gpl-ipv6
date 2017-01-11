@@ -24,7 +24,7 @@
 
 #include "TcpClientThread.h"
 
-TcpClientThread::TcpClientThread(SocketIPv4 *socket)
+TcpClientThread::TcpClientThread(SocketIPv6 *socket)
 : m_socket(socket)
 {
 }

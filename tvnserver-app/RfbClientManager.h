@@ -91,7 +91,7 @@ public:
   void setDynViewPort(const ViewPortState *dynViewPort);
 
   // FIXME: Place comment for this method here.
-  void addNewConnection(SocketIPv4 *socket, ViewPortState *constViewPort,
+  void addNewConnection(SocketIPv6 *socket, ViewPortState *constViewPort,
                         bool viewOnly, bool isOutgoing);
 
 protected:

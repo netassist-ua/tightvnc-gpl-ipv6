@@ -26,7 +26,7 @@
 #define __VIEWER_INSTANCE_H__
 
 #include "ViewerWindow.h"
-#include "network/socket/SocketIPv4.h"
+#include "network/socket/SocketIPv6.h"
 
 #include "ViewerVncAuthHandler.h"
 #include "viewer-core/DispatchIdProvider.h"
@@ -43,7 +43,7 @@ public:
   ViewerInstance(WindowsApplication *application,
                  ConnectionData *condata,
                  const ConnectionConfig *conConf,
-                 SocketIPv4 *socket);
+                 SocketIPv6 *socket);
 
   virtual ~ViewerInstance();
 
@@ -64,7 +64,7 @@ protected:
   ViewerVncAuthHandler m_vncAuthHandler;
   FileTransferCapability m_fileTransfer;
   DispatchIdProvider m_idHolder;
-  SocketIPv4 *m_socket;
+  SocketIPv6 *m_socket;
 };
 
 #endif

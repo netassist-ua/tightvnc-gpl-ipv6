@@ -28,7 +28,7 @@
 #include "log-writer/LogWriter.h"
 #include "network/RfbInputGate.h"
 #include "network/RfbOutputGate.h"
-#include "network/socket/SocketIPv4.h"
+#include "network/socket/SocketIPv6.h"
 #include "network/socket/SocketStream.h"
 #include "thread/LocalMutex.h"
 
@@ -39,7 +39,7 @@ public:
   virtual ~TcpConnection();
 
   void bind(const TCHAR *host, UINT16 port);
-  void bind(SocketIPv4 *socket);
+  void bind(SocketIPv6 *socket);
   void bind(RfbInputGate *input, RfbOutputGate *output);
 
   void connect();
@@ -50,7 +50,7 @@ public:
 private:
   StringStorage m_host;
   UINT16 m_port;
-  SocketIPv4 *m_socket;
+  SocketIPv6 *m_socket;
   bool m_socketOwner;
   SocketStream *m_socketStream;
   RfbInputGate *m_input;

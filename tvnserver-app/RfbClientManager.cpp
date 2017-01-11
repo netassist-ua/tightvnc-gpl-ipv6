@@ -139,7 +139,7 @@ void RfbClientManager::onAuthFailed(RfbClient *client)
 
 void RfbClientManager::onCheckAccessControl(RfbClient *client)
 {
-  SocketAddressIPv4 peerAddr;
+  SocketAddressIPv6 peerAddr;
 
   try {
     client->getSocketAddr(&peerAddr);
@@ -147,32 +147,32 @@ void RfbClientManager::onCheckAccessControl(RfbClient *client)
     throw AuthException(_T("Failed to get IP address of the RFB client"));
   }
 
-  struct sockaddr_in addr_in = peerAddr.getSockAddr();
+  //struct sockaddr_in addr_in = peerAddr.getSockAddr();
 
-  ServerConfig *config = Configurator::getInstance()->getServerConfig();
+  //ServerConfig *config = Configurator::getInstance()->getServerConfig();
 
-  IpAccessRule::ActionType action;
+  //IpAccessRule::ActionType action;
 
-  if (!client->isOutgoing()) {
-    action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
-  } else {
-    action = IpAccessRule::ACTION_TYPE_ALLOW;
-  }
+  //if (!client->isOutgoing()) {
+  //  action = config->getActionByAddress((unsigned long)addr_in.sin_addr.S_un.S_addr);
+  //} else {
+  //  action = IpAccessRule::ACTION_TYPE_ALLOW;
+  //}
 
-  // Promt user to know what to do with incmoing connection.
+  //// Promt user to know what to do with incmoing connection.
 
-  if (action == IpAccessRule::ACTION_TYPE_QUERY) {
-    StringStorage peerHost;
+  //if (action == IpAccessRule::ACTION_TYPE_QUERY) {
+  //  StringStorage peerHost;
 
-    peerAddr.toString(&peerHost);
+  //  peerAddr.toString(&peerHost);
 
-    int queryRetVal = QueryConnectionApplication::execute(peerHost.getString(),
-                                                          config->isDefaultActionAccept(),
-                                                          config->getQueryTimeout());
-    if (queryRetVal == 1) {
-      throw AuthException(_T("Connection has been rejected"));
-    }
-  }
+  //  int queryRetVal = QueryConnectionApplication::execute(peerHost.getString(),
+  //                                                        config->isDefaultActionAccept(),
+  //                                                        config->getQueryTimeout());
+  //  if (queryRetVal == 1) {
+  //    throw AuthException(_T("Connection has been rejected"));
+  //  }
+  //}
 }
 
 void RfbClientManager::onClipboardUpdate(const StringStorage *newClipboard)
@@ -364,7 +364,7 @@ void RfbClientManager::refreshBan()
   }
 }
 
-void RfbClientManager::addNewConnection(SocketIPv4 *socket,
+void RfbClientManager::addNewConnection(SocketIPv6 *socket,
                                         ViewPortState *constViewPort,
                                         bool viewOnly, bool isOutgoing)
 {

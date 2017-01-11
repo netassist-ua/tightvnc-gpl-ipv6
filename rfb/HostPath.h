@@ -36,24 +36,16 @@ public:
   bool set(const char *path);
 
   bool isValid() const               { return (m_path != 0); }
-  bool isSshHostSpecified() const    { return (m_sshHost != 0); }
 
   const char* get() const            { return m_path; }
-  const char* getSshHost() const     { return m_sshHost; }
-  const int getSshPort() const       { return m_sshPort; }
   const char* getVncHost() const     { return m_vncHost; }
   const int getVncPort() const       { return m_vncPort; }
 
 private:
-  static const size_t m_SSH_USER_MAX_CHARS;
-  static const size_t m_SSH_HOST_MAX_CHARS;
-  static const size_t m_SSH_PORT_MAX_CHARS;
   static const size_t m_VNC_HOST_MAX_CHARS;
   static const size_t m_VNC_PORT_MAX_CHARS;
 
   char* m_path;
-  char* m_sshHost;
-  int m_sshPort;
   char* m_vncHost;
   int m_vncPort;
 
@@ -64,14 +56,11 @@ private:
 
   //
   // Parse m_path[] and store lengths if tokens in the specified array
-  // of four size_t elements. Up to four tokens are detected: SSH host
-  // name (optionally including a user name), SSH port number, VNC
-  // host name, VNC port or display number. Port number tokens include
-  // colons at the their beginning. Note that the '/' character
-  // between SSH-related and VNC-related parts is not counted in any
-  // token length.
+  // of four size_t elements. Up to four tokens are detected: VNC
+  // host name (start and end), VNC port or display number. Port number tokens include
+  // colons at the their beginning.
   //
-  // Examples: "user@server:22/vnc::443"  ->  11, 3, 3, 5
+  // Examples: "vnc::443"				  ->   0, 3, 3, 5
   //           "host/:1"                  ->   4, 0, 0, 2
   //           ":1"                       ->   0, 0, 0, 2
   //

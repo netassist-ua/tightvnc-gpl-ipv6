@@ -1,4 +1,4 @@
-// Copyright (C) 2009,2010,2011,2012 GlavSoft LLC.
+// Copyright (C) 2010,2011,2012 GlavSoft LLC.
 // All rights reserved.
 //
 //-------------------------------------------------------------------------
@@ -22,28 +22,49 @@
 //-------------------------------------------------------------------------
 //
 
-#include "HttpServer.h"
-#include "HttpClient.h"
+#include "SocketIPv6Transport.h"
 
-#include "thread/ZombieKiller.h"
+#include "network/socket/SocketStream.h"
 
-HttpServer::HttpServer(const TCHAR *bindHost, unsigned short bindPort, bool lockAddr, LogWriter *log)
-: TcpServer(bindHost, bindPort, true, lockAddr),
-  m_log(log)
+SocketIPv6Transport::SocketIPv6Transport(SocketIPv6 *socket)
+: m_socket(socket)
 {
-  m_log->message(_T("Http server started"));
+  m_stream = new SocketStream(m_socket);
 }
 
-HttpServer::~HttpServer()
+SocketIPv6Transport::~SocketIPv6Transport()
 {
-  m_log->message(_T("Http server stopped"));
+  try { close(); } catch (...) { }
+
+  delete m_stream;
+  delete m_socket;
 }
 
-void HttpServer::onAcceptConnection(SocketIPv6 *socket)
+Channel* SocketIPv6Transport::getIOStream()
 {
-  TcpClientThread *clientThread = new HttpClient(socket, m_log);
+  if (m_socket->isBound()) {
+    _ASSERT(FALSE);
 
-  clientThread->resume();
+    return 0;
+  }
 
-  ZombieKiller::getInstance()->addZombie(clientThread);
+  return m_stream;
+}
+
+Transport *SocketIPv6Transport::accept()
+{
+  if (!m_socket->isBound()) {
+    _ASSERT(FALSE);
+
+    return 0;
+  }
+
+  return new SocketIPv6Transport(m_socket->accept());
+}
+
+void SocketIPv6Transport::close()
+{
+  try { m_socket->shutdown(SD_BOTH); } catch (...) { }
+
+  m_socket->close();
 }
