@@ -173,9 +173,16 @@ struct sockaddr_in6 SocketAddressIPv6::getSockAddr() const
 
 void SocketAddressIPv6::toString(StringStorage *address) const
 {
-  char v6text[128];
-  inet_pton(AF_INET6, (const char *)m_addr.u.Byte, &v6text);
-  address->appendString((const TCHAR *)v6text);
+   //IPv6 string address buffer
+  char v6text[sizeof("ffff:ffff:ffff:ffff:ffff:ffff:255.255.255.255")];
+
+  //inet_ntop call to get a text form
+  inet_ntop(AF_INET6, (const char *)m_addr.u.Byte, v6text, sizeof(v6text));
+
+  //Set string
+  AnsiStringStorage ipAnsi;
+  ipAnsi.setString(v6text);
+  ipAnsi.toStringStorage(address);
 }
 
 SocketAddressIPv6 SocketAddressIPv6::resolve(const TCHAR *host, unsigned short m_port)
